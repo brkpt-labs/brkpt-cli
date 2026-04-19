@@ -1,0 +1,50 @@
+{
+  "name": "@brkpt/cli",
+  "version": "0.1.1",
+  "description": "The official CLI for brkpt",
+  "author": "ir1do",
+  "private": false,
+  "license": "MIT",
+  "keywords": [
+    "nestjs",
+    "cli",
+    "brkpt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brkpt-labs/brkpt-cli.git"
+  },
+  "main": "dist/index.mjs",
+  "bin": {
+    "brkpt": "dist/index.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "commander": "^14.0.3",
+    "picocolors": "^1.1.1",
+    "update-notifier": "^7.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/update-notifier": "^6.0.8",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
