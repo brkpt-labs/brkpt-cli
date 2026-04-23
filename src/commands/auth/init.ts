@@ -101,7 +101,7 @@ export async function authInit() {
   showNote(
     [
       `1. Register in your AppModule:`,
-      `   ${cmd('EventEmitterModule.forRoot({ isGlobal: true, wildcard: true })')}`,
+      `   ${cmd('EventEmitterModule.forRoot({ global: true, wildcard: true })')}`,
       `   ${cmd('BrkptAuthModule.forRoot({ ... })')}`,
       ``,
       `2. Implement your adapters and register them in ${cmd('features.ts')}`,
