@@ -4,7 +4,7 @@ import { dirname, join } from 'path';
 const REGISTRY_URL =
   'https://raw.githubusercontent.com/brkpt-labs/brkpt-auth/main/lib/registry.json';
 
-export interface VerifierConfig {
+export interface DriverConfig {
   files: string[];
   dependencies: string[];
   devDependencies: string[];
@@ -15,7 +15,7 @@ export interface FeatureConfig {
   extraFiles?: string[];
   dependencies: string[];
   devDependencies: string[];
-  verifiers?: Record<string, VerifierConfig>;
+  drivers?: Record<string, DriverConfig>;
 }
 
 export interface Registry {

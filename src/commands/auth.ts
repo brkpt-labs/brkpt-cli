@@ -13,6 +13,6 @@ export function registerAuthCommands(program: Command) {
   auth
     .command('add [feature]')
     .description('Add a brkpt-auth feature')
-    .option('--verifier <names>', 'Add verifier(s) for this feature')
+    .option('--driver <names>', 'Add driver(s) for this feature')
     .action(authAdd);
 }

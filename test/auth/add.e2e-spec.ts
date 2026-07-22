@@ -115,42 +115,36 @@ describe('auth add (e2e)', () => {
     expect(existsSync(join(brkptAuthDir, 'features/credentials'))).toBe(true);
   });
 
-  it('should install verifier via --verifier', async () => {
-    await authAdd('oauth', { verifier: 'google' });
+  it('should install driver via --driver', async () => {
+    await authAdd('oauth', { driver: 'google' });
     expect(
-      existsSync(
-        join(brkptAuthDir, 'features/oauth/verifiers/google.verifier.ts'),
-      ),
+      existsSync(join(brkptAuthDir, 'features/oauth/drivers/google.driver.ts')),
     ).toBe(true);
   });
 
-  it('should install multiple verifiers via comma-separated --verifier', async () => {
-    await authAdd('oauth', { verifier: 'google,github' });
+  it('should install multiple drivers via comma-separated --driver', async () => {
+    await authAdd('oauth', { driver: 'google,github' });
     expect(
-      existsSync(
-        join(brkptAuthDir, 'features/oauth/verifiers/google.verifier.ts'),
-      ),
+      existsSync(join(brkptAuthDir, 'features/oauth/drivers/google.driver.ts')),
     ).toBe(true);
     expect(
-      existsSync(
-        join(brkptAuthDir, 'features/oauth/verifiers/github.verifier.ts'),
-      ),
+      existsSync(join(brkptAuthDir, 'features/oauth/drivers/github.driver.ts')),
     ).toBe(true);
   });
 
-  it('should skip already installed verifier', async () => {
-    await authAdd('oauth', { verifier: 'google' });
+  it('should skip already installed driver', async () => {
+    await authAdd('oauth', { driver: 'google' });
     const before = readFileSync(join(brkptAuthDir, 'features.ts'), 'utf-8');
-    await authAdd('oauth', { verifier: 'google' });
+    await authAdd('oauth', { driver: 'google' });
     const after = readFileSync(join(brkptAuthDir, 'features.ts'), 'utf-8');
     expect(before).toBe(after);
   });
 
-  it('should exit on unknown verifier', async () => {
+  it('should exit on unknown driver', async () => {
     const exitSpy = vi.spyOn(process, 'exit').mockImplementation((() => {
       throw new Error('exit');
     }) as any);
-    await expect(authAdd('oauth', { verifier: 'unknown' })).rejects.toThrow();
+    await expect(authAdd('oauth', { driver: 'unknown' })).rejects.toThrow();
     exitSpy.mockRestore();
   });
 

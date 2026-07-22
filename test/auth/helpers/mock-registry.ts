@@ -59,20 +59,20 @@ export const mockRegistry: Registry = {
         'features/oauth/oauth.port.ts',
         'features/oauth/oauth.feature.ts',
         'features/oauth/oauth.controller.ts',
-        'features/oauth/oauth.verifier.ts',
+        'features/oauth/oauth.driver.ts',
         'features/oauth/oauth.service.spec.ts',
         'features/oauth/dto/oauth.dto.ts',
       ],
       dependencies: [],
       devDependencies: [],
-      verifiers: {
+      drivers: {
         google: {
-          files: ['features/oauth/verifiers/google.verifier.ts'],
+          files: ['features/oauth/drivers/google.driver.ts'],
           dependencies: ['google-auth-library'],
           devDependencies: [],
         },
         github: {
-          files: ['features/oauth/verifiers/github.verifier.ts'],
+          files: ['features/oauth/drivers/github.driver.ts'],
           dependencies: [],
           devDependencies: [],
         },

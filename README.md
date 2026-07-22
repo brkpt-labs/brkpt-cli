@@ -19,8 +19,8 @@ brkpt auth init
 # Add a feature
 brkpt auth add
 
-# Add a feature with a specific verifier
-brkpt auth add oauth --verifier google
+# Add a feature with a specific driver
+brkpt auth add oauth --driver google
 ```
 
 ## License

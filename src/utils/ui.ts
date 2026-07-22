@@ -45,12 +45,12 @@ export async function selectFeature(available: string[]): Promise<string> {
   return result as string;
 }
 
-export async function selectVerifiers(
+export async function selectDrivers(
   featureName: string,
   available: string[],
 ): Promise<string[]> {
   const result = await multiselect({
-    message: `Select verifiers for ${cmd(featureName)}:`,
+    message: `Select drivers for ${cmd(featureName)}:`,
     options: [...available.map((v) => ({ value: v, label: v }))],
     required: false,
   });

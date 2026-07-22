@@ -16,14 +16,14 @@ import {
   outro,
   printDepsWarning,
   selectFeature,
-  selectVerifiers,
+  selectDrivers,
   showNote,
   title,
   warn,
 } from '../../utils/ui';
 
 interface AddOptions {
-  verifier?: string;
+  driver?: string;
 }
 
 export async function authAdd(
@@ -76,48 +76,48 @@ export async function authAdd(
   const feature = registry.features[name]!;
   const featureDir = join(brkptAuthDir, 'features', name);
   const featureExists = existsSync(featureDir);
-  const availableVerifiers = Object.keys(feature.verifiers ?? {});
+  const availableDrivers = Object.keys(feature.drivers ?? {});
 
-  // 4. 确定 verifiers
-  let selectedVerifiers: string[] = [];
+  // 4. 确定 drivers
+  let selectedDrivers: string[] = [];
 
-  if (options.verifier) {
-    selectedVerifiers = options.verifier
+  if (options.driver) {
+    selectedDrivers = options.driver
       .split(',')
       .map((v) => v.trim())
       .filter(Boolean);
-    const invalid = selectedVerifiers.filter(
-      (v) => !availableVerifiers.includes(v),
+    const invalid = selectedDrivers.filter(
+      (v) => !availableDrivers.includes(v),
     );
     if (invalid.length > 0) {
       exitWithError(
-        availableVerifiers.length > 0
-          ? `Unknown verifier${invalid.length > 1 ? 's' : ''}: ${invalid.map(cmd).join(', ')}\n\n  Available: ${cmd(availableVerifiers.join(', '))}`
-          : `${cmd(name)} has no verifiers.`,
+        availableDrivers.length > 0
+          ? `Unknown driver${invalid.length > 1 ? 's' : ''}: ${invalid.map(cmd).join(', ')}\n\n  Available: ${cmd(availableDrivers.join(', '))}`
+          : `${cmd(name)} has no drivers.`,
       );
     }
-  } else if (availableVerifiers.length > 0) {
-    selectedVerifiers = await selectVerifiers(name, availableVerifiers);
+  } else if (availableDrivers.length > 0) {
+    selectedDrivers = await selectDrivers(name, availableDrivers);
   }
 
-  // 5. 检查各 verifier 存在性
-  const verifiersToInstall = selectedVerifiers.filter((v) => {
-    const vc = feature.verifiers![v]!;
-    const verifierFile = join(brkptAuthDir, vc.files[0] ?? '');
-    return !existsSync(verifierFile);
+  // 5. 检查各 driver 存在性
+  const driversToInstall = selectedDrivers.filter((v) => {
+    const vc = feature.drivers![v]!;
+    const driverFile = join(brkptAuthDir, vc.files[0] ?? '');
+    return !existsSync(driverFile);
   });
 
-  const alreadyInstalledVerifiers = selectedVerifiers.filter((v) => {
-    const vc = feature.verifiers![v]!;
-    const verifierFile = join(brkptAuthDir, vc.files[0] ?? '');
-    return existsSync(verifierFile);
+  const alreadyInstalledDrivers = selectedDrivers.filter((v) => {
+    const vc = feature.drivers![v]!;
+    const driverFile = join(brkptAuthDir, vc.files[0] ?? '');
+    return existsSync(driverFile);
   });
 
   // 6. 检查是否有任何东西需要安装
-  if (featureExists && verifiersToInstall.length === 0) {
-    if (alreadyInstalledVerifiers.length > 0) {
-      alreadyInstalledVerifiers.forEach((v) =>
-        warn(`${name}/${v} verifier already installed.`),
+  if (featureExists && driversToInstall.length === 0) {
+    if (alreadyInstalledDrivers.length > 0) {
+      alreadyInstalledDrivers.forEach((v) =>
+        warn(`${name}/${v} driver already installed.`),
       );
     } else {
       warn(`${name} already installed.`);
@@ -133,13 +133,13 @@ export async function authAdd(
     planLines.push(`${cmd(name)} feature`);
   }
 
-  verifiersToInstall.forEach((v) =>
-    planLines.push(`${cmd(name + '/' + v)} verifier`),
+  driversToInstall.forEach((v) =>
+    planLines.push(`${cmd(name + '/' + v)} driver`),
   );
 
-  alreadyInstalledVerifiers.forEach((v) =>
+  alreadyInstalledDrivers.forEach((v) =>
     planLines.push(
-      `${cmd(name + '/' + v)} verifier ${dim('(already installed, skip)')}`,
+      `${cmd(name + '/' + v)} driver ${dim('(already installed, skip)')}`,
     ),
   );
 
@@ -150,7 +150,7 @@ export async function authAdd(
 
   // 8. 安装 feature
   let installedFeature = false;
-  let installedVerifier = false;
+  let installedDriver = false;
 
   if (!featureExists) {
     try {
@@ -176,23 +176,23 @@ export async function authAdd(
     }
   }
 
-  // 9. 安装 verifiers
+  // 9. 安装 drivers
   const allDeps: string[] = installedFeature ? [...feature.dependencies] : [];
   const allDevDeps: string[] = installedFeature
     ? [...feature.devDependencies]
     : [];
 
-  for (const v of verifiersToInstall) {
-    const vc = feature.verifiers![v]!;
+  for (const v of driversToInstall) {
+    const vc = feature.drivers![v]!;
     try {
       await pull(
         registry.baseUrl,
         vc.files,
         brkptAuthDir,
-        `${name}/${v} verifier`,
+        `${name}/${v} driver`,
         s,
       );
-      installedVerifier = true;
+      installedDriver = true;
       allDeps.push(...vc.dependencies);
       allDevDeps.push(...vc.devDependencies);
     } catch (err) {
