@@ -28,7 +28,7 @@ interface AddOptions {
 
 export async function authAdd(
   featureName: string | undefined,
-  options: AddOptions,
+  options: AddOptions = {},
 ) {
   const cwd = process.cwd();
 

@@ -8,6 +8,8 @@ export function registerAuthCommands(program: Command) {
   auth
     .command('init')
     .description('Initialize brkpt-auth in your NestJS project')
+    .option('--common', 'Install brkpt-auth common files')
+    .option('--module', 'Install the brkpt-auth module file')
     .action(authInit);
 
   auth
