@@ -12,7 +12,7 @@ const program = new Command();
 
 program
   .name('brkpt')
-  .description('The official CLI for brkpt')
+  .description('The command-line tool that scaffolds brkpt projects')
   .version(pkg.version)
   .configureOutput({
     writeErr: (str) => process.stderr.write(pc.red('✗') + ' ' + str),

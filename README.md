@@ -1,6 +1,6 @@
 # @brkpt/cli
 
-The official CLI for brkpt.
+The command-line tool that scaffolds brkpt projects.
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install -g @brkpt/cli
 
 ## brkpt auth
 
-Authentication scaffolding for NestJS, powered by [brkpt-auth](https://github.com/brkpt-labs/brkpt-auth).
+Scaffolding for [brkpt-auth](https://github.com/brkpt-labs/brkpt-auth): transparent, composable, portable, hexagonal authentication for NestJS.
 
 ```bash
 # Initialize brkpt-auth in your project

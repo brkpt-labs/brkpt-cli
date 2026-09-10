@@ -1,7 +1,7 @@
 {
   "name": "@brkpt/cli",
-  "version": "0.1.5",
-  "description": "The official CLI for brkpt",
+  "version": "0.1.6",
+  "description": "The command-line tool that scaffolds brkpt projects",
   "author": "ir1do",
   "private": false,
   "license": "MIT",
